@@ -6,10 +6,20 @@ export const ShoppingCartContext = createContext();
 export const ShoppingCartProvider = ({ children }) => {
   // count es contador
   const [count, setCount] = useState(0);
+  //product detail abajo mostar los productos seleccionados abrir y cerrar
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
-  //abajo mostar los producrtos seleccionados
   const openProductDetail = () => setIsProductDetailOpen(true);
   const closeProductDetail = () => setIsProductDetailOpen(false);
+
+  //checkout mostar los productos seleccionados abrir y cerrar
+  const [isCheckoutSideMenuOpen, setIsCheckoutSideMenuOpen] = useState(false);
+  const openCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(true);
+  const closeCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(false);
+
+  //Product Detail mostrar prodcuto
+  const [productToShow, setProductToShow] = useState({});
+  //almacenar los productos en el carrito
+  const [cardProducts, setCardProducts] = useState([]);
 
   return (
     <ShoppingCartContext.Provider
@@ -19,6 +29,13 @@ export const ShoppingCartProvider = ({ children }) => {
         openProductDetail,
         closeProductDetail,
         isProductDetailOpen,
+        productToShow,
+        setProductToShow,
+        cardProducts,
+        setCardProducts,
+        isCheckoutSideMenuOpen,
+        openCheckoutSideMenu,
+        closeCheckoutSideMenu,
       }}
     >
       {children}
