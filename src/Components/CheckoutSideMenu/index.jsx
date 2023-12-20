@@ -1,11 +1,19 @@
 import { useContext } from "react";
 import { ShoppingCartContext } from "../../Context";
 import { XMarkIcon } from "@heroicons/react/24/solid";
+import OrderCard from "../../Components/OrderCard";
 import "./style.css";
 
 const CheckoutSideMenu = () => {
   // se copia context de index card
   const context = useContext(ShoppingCartContext);
+  //eliminar un producto del carrito
+  const handleDelete = (id) => {
+    const filteredProducts = context.cartProducts.filter(
+      (product) => product.id !== id
+    );
+    context.setCartProducts(filteredProducts);
+  };
 
   return (
     <aside
@@ -20,6 +28,21 @@ const CheckoutSideMenu = () => {
             className="h-6 w-6 text-black cursor-pointer"
           ></XMarkIcon>
         </div>
+      </div>
+      <div className="px-6 overflow-y-scroll">
+        {
+          //se copia el map de index card
+          context.cartProducts.map((product) => (
+            <OrderCard
+              key={product.id}
+              id={product.id}
+              title={product.title}
+              imageUrl={product.imageUrl}
+              price={product.price}
+              handleDelete={handleDelete}
+            />
+          ))
+        }
       </div>
     </aside>
   );
