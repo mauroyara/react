@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { ShoppingCartContext } from "../../Context";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import OrderCard from "../../Components/OrderCard";
+import { totalPrice } from "../../utils";
 import "./style.css";
 
 const CheckoutSideMenu = () => {
@@ -15,6 +16,16 @@ const CheckoutSideMenu = () => {
     context.setCartProducts(filteredProducts);
   };
 
+  const handleCheckout = () => {
+    const orderToadd = {
+      date: "22.12.23",
+      products: context.cartProducts,
+      totalProducts: context.cartProducts.length,
+      totalPrice: totalPrice(context.cartProducts),
+    };
+    context.setOrder([...context.order, orderToadd]);
+    context.setCartProducts([]);
+  };
   return (
     <aside
       className={`${context.isCheckoutSideMenuOpen ? "flex" : "hidden"}
@@ -29,7 +40,7 @@ const CheckoutSideMenu = () => {
           ></XMarkIcon>
         </div>
       </div>
-      <div className="px-6 overflow-y-scroll">
+      <div className="px-6 overflow-y-scroll flex-1">
         {
           //se copia el map de index card
           context.cartProducts.map((product) => (
@@ -43,6 +54,21 @@ const CheckoutSideMenu = () => {
             />
           ))
         }
+      </div>
+      <div className="px-6 mb-6">
+        <p className="flex justify-between items-center mb-2">
+          <span className="font-ligth">Total:</span>
+          <span className="font-medium text-2xl">
+            ${totalPrice(context.cartProducts)}
+          </span>
+        </p>
+
+        <button
+          className="bg-black py-3 text-white rounded-lg w-full"
+          onClick={() => handleCheckout()}
+        >
+          Checkout
+        </button>
       </div>
     </aside>
   );
