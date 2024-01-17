@@ -34,6 +34,10 @@ const AppRoutes = () => {
       element: <MyOrder />,
     },
     {
+      path: "/MyOrders/:id",
+      element: <MyOrder />,
+    },
+    {
       path: "/*",
       element: <NotFound />,
     },
